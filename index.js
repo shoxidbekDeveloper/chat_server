@@ -22,13 +22,13 @@ const port = process.env.PORT || 5000;
 io.on("connection", (socket) => {
   console.log("user connected");
   socket.on("ms-join", (data) => {
-    socket.join("123");
-    console.log(data.username);
+    socket.join(data?.roomId);
+    console.log(data.username + data?.roomId);
   });
 
   socket.on("sendMessage", (data) => {
     console.log(data);
-    socket.to("123").emit("response-message", data);
+    socket.to(data?.roomId).emit("response-message", data);
   });
 
   socket.on("disconnect", () => {
@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
 });
 
 app.use("/", (req, res) => {
-  res.send("Chat server ");
+  res.send("shoxidbek ");
 });
 
 server.listen(port, () => console.log(`run on port ${port}`));
